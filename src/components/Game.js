@@ -7,9 +7,17 @@ class Game extends Component {
 
   state = {fields: this.props.field, isXturn: true, gotWinner: false, history: []}
 
-  restart = ()=>
+  useHistory = (index) => {
+    
+    let historycalState = this.state.history[index]
+    this.setState ({fields: historycalState.f, isXturn: historycalState.t})
+  }
+  
+  restart = () =>
 
-  this.setState ({gotWinner: false, fields: this.props.field, history: [] })
+  {this.setState ({gotWinner: false, fields: this.props.field, history: [] })}
+  
+  
   handleMove = (index)=>{
   let newField = [...this.state.fields]
 
@@ -18,12 +26,19 @@ class Game extends Component {
 
       let check = checkWinner (newField)
 
-      let historyState = [...this.state.history]
+      let stateHistory = [...this.state.history]
 
-      historyState.push(this.state)
+      let historyState = newField
+      
+      let turn = this.state.isXturn
+      
+      
 
+      let h = {f: historyState, t:turn}
 
-      this.setState ({fields: newField, isXturn:  !this.state.isXturn, gotWinner:check, history: historyState  })
+      stateHistory.push(h)
+
+      this.setState ({fields: newField, isXturn:  !this.state.isXturn, gotWinner:check, history: stateHistory  })
 
     } else {
       alert ('поле занято')
@@ -39,16 +54,26 @@ class Game extends Component {
       {(this.state.gotWinner == false) ? (<h2>{(this.state.isXturn === true) ? 'ход Х' : 'ход O'}</h2>) : null}
       <h3>{(this.state.gotWinner == true) ? (this.state.isXturn === true) ? 'Победа О' : 'Победа Х' : null}</h3>
       {(this.state.gotWinner == true) ? <button onClick={this.restart}>re</button>: null}
+      
       <Board
       field={this.state.fields}
       handleMove={this.handleMove}
       turn={this.state.isXturn}
       gotWinner={this.state.gotWinner}
       />
+     
+      <div>
+      
       <h1>Game history</h1>
+      
       <History
       hist={this.state.history}
+      useHistory={this.useHistory}
       />
+
+      </div>
+      
+
       </div>
 
     );
@@ -76,7 +101,7 @@ lines.forEach ((el, ind)=>{
 
 let [a,b,c] = el
 
-if ((gameField[a] !=null) && (gameField[b] !=null)&& (gameField[c] !=null)) {
+if ((gameField[a] !==null) && (gameField[b] !==null)&& (gameField[c] !==null)) {
   if ((gameField[a] === gameField[b])&& (gameField[b]=== gameField[c])) {
     gotwinner = true
   } else {

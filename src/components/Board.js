@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Squere from './Squere'
-//import './Board.css'
+import './Board.css'
 
 class Board extends Component {
   render() {
@@ -8,7 +8,10 @@ class Board extends Component {
     let gameBoard = [...this.props.field].map ((el,ind) =>{
       return (
 
-        <div className='line' key={ind}>
+        <div 
+        className={ (ind % 3 == 0 ) ? 'newline' : 'reg' } 
+        key={ind}>
+        
         <Squere
 
         el={el}
@@ -22,8 +25,10 @@ class Board extends Component {
     })
 
     return (
-      <div className='d-flex flex-row'>
+      <div className=''>
+      
       {gameBoard}
+
       </div>
     );
   }

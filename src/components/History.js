@@ -6,7 +6,7 @@ class History extends Component {
 
     let historyList = this.props.hist.map ((el, ind)=>{
       return (
-        <button
+        <button onClick={()=>{this.props.useHistory(ind)}}
 
          key={ind} className='mx-1'>
          {ind+1}
