@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Board from './Board'
+import History from './History'
+
 
 class Game extends Component {
 
@@ -7,10 +9,7 @@ class Game extends Component {
 
   restart = ()=>
 
-  this.setState ({gotWinner: false, fields: this.props.field })
-
-
-
+  this.setState ({gotWinner: false, fields: this.props.field, history: [] })
   handleMove = (index)=>{
   let newField = [...this.state.fields]
 
@@ -18,12 +17,13 @@ class Game extends Component {
       newField [index] = (this.state.isXturn === true) ? 'X' : 'O'
 
       let check = checkWinner (newField)
-      console.log (check)
-      this.setState ({fields: newField, isXturn:  !this.state.isXturn, gotWinner:check })
+
+      let historyState = [...this.state.history]
+
+      historyState.push(this.state)
 
 
-
-
+      this.setState ({fields: newField, isXturn:  !this.state.isXturn, gotWinner:check, history: historyState  })
 
     } else {
       alert ('поле занято')
@@ -45,6 +45,10 @@ class Game extends Component {
       turn={this.state.isXturn}
       gotWinner={this.state.gotWinner}
       />
+      <h1>Game history</h1>
+      <History
+      hist={this.state.history}
+      />
       </div>
 
     );
@@ -53,7 +57,7 @@ class Game extends Component {
 
 function checkWinner (gameField) {
 
-console.log (gameField)
+
 
 let lines = [
 [0,1,2],
@@ -84,7 +88,7 @@ if ((gameField[a] !=null) && (gameField[b] !=null)&& (gameField[c] !=null)) {
 
 })
 
-console.log (gotwinner)
+
 return gotwinner
 
 }
