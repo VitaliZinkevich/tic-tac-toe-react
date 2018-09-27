@@ -8,16 +8,15 @@ class Game extends Component {
   state = {fields: this.props.field, isXturn: true, gotWinner: false, history: []}
 
   useHistory = (index) => {
-    
+
     let historycalState = this.state.history[index]
     this.setState ({fields: historycalState.f, isXturn: historycalState.t})
   }
-  
-  restart = () =>
 
+  restart = () =>
   {this.setState ({gotWinner: false, fields: this.props.field, history: [] })}
-  
-  
+
+
   handleMove = (index)=>{
   let newField = [...this.state.fields]
 
@@ -29,10 +28,10 @@ class Game extends Component {
       let stateHistory = [...this.state.history]
 
       let historyState = newField
-      
+
       let turn = this.state.isXturn
-      
-      
+
+
 
       let h = {f: historyState, t:turn}
 
@@ -54,25 +53,23 @@ class Game extends Component {
       {(this.state.gotWinner == false) ? (<h2>{(this.state.isXturn === true) ? 'ход Х' : 'ход O'}</h2>) : null}
       <h3>{(this.state.gotWinner == true) ? (this.state.isXturn === true) ? 'Победа О' : 'Победа Х' : null}</h3>
       {(this.state.gotWinner == true) ? <button onClick={this.restart}>re</button>: null}
-      
+
+      <div className='d-flex flex-row'>
       <Board
       field={this.state.fields}
       handleMove={this.handleMove}
       turn={this.state.isXturn}
       gotWinner={this.state.gotWinner}
       />
-     
+      </div>
+
       <div>
-      
       <h1>Game history</h1>
-      
       <History
       hist={this.state.history}
       useHistory={this.useHistory}
       />
-
       </div>
-      
 
       </div>
 

@@ -1,0 +1,9 @@
+.item {
+  background: grey;
+  float: left;
+}
+
+.new {
+  background: pink;
+  clear:left;
+}

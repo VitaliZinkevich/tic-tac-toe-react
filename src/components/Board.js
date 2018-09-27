@@ -8,25 +8,19 @@ class Board extends Component {
     let gameBoard = [...this.props.field].map ((el,ind) =>{
       return (
 
-        <div 
-        className={ (ind % 3 == 0 ) ? 'newline' : 'reg' } 
-        key={ind}>
-        
-        <Squere
-
+        <Squere key={ind}
         el={el}
         index={ind}
         handleMove={this.props.handleMove}
         gotWinner={this.props.gotWinner}
-
         />
-         </div>
+
       )
     })
 
     return (
       <div className=''>
-      
+
       {gameBoard}
 
       </div>
